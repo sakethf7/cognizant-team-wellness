@@ -44,6 +44,18 @@ export default {
 					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))'
 				},
+				wellness: {
+					DEFAULT: 'hsl(var(--wellness))',
+					foreground: 'hsl(var(--wellness-foreground))'
+				},
+				energy: {
+					DEFAULT: 'hsl(var(--energy))',
+					foreground: 'hsl(var(--energy-foreground))'
+				},
+				calm: {
+					DEFAULT: 'hsl(var(--calm))',
+					foreground: 'hsl(var(--calm-foreground))'
+				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
 					foreground: 'hsl(var(--popover-foreground))'
@@ -68,6 +80,17 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			backgroundImage: {
+				'gradient-wellness': 'var(--gradient-wellness)',
+				'gradient-energy': 'var(--gradient-energy)',
+				'gradient-calm': 'var(--gradient-calm)',
+				'gradient-hero': 'var(--gradient-hero)'
+			},
+			boxShadow: {
+				'wellness': 'var(--shadow-wellness)',
+				'energy': 'var(--shadow-energy)',
+				'calm': 'var(--shadow-calm)'
+			},
 			keyframes: {
 				'accordion-down': {
 					from: {
@@ -84,11 +107,29 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-wellness': {
+					'0%, 100%': {
+						opacity: '1'
+					},
+					'50%': {
+						opacity: '0.5'
+					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-wellness': 'pulse-wellness 2s ease-in-out infinite',
+				'float': 'float 3s ease-in-out infinite'
 			}
 		}
 	},
