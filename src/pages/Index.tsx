@@ -1,8 +1,10 @@
+
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import HealthDashboard from "@/components/HealthDashboard";
 import CheckInSystem from "@/components/CheckInSystem";
 import Analytics from "@/components/Analytics";
+import HealthBot from "@/components/HealthBot";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -15,6 +17,8 @@ const Index = () => {
         return <CheckInSystem />;
       case "analytics":
         return <Analytics />;
+      case "healthbot":
+        return <HealthBot />;
       case "team":
         return (
           <div className="text-center py-12">
