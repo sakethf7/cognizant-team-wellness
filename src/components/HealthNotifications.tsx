@@ -181,6 +181,31 @@ export default function HealthNotifications({ conditions }: HealthNotificationsP
     setActiveNotifications(active);
   }, [notifications]);
 
+  // Time-based toast triggers at exact scheduled times (HH:mm)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      const current = `${hh}:${mm}`;
+
+      notifications.forEach((n) => {
+        if (n.enabled && n.time === current) {
+          const key = `notif-${n.id}-${now.toDateString()}-${current}`;
+          if (!sessionStorage.getItem(key)) {
+            toast({ title: n.title, description: n.message });
+            setActiveNotifications((prev) =>
+              prev.some((an) => an.id === n.id) ? prev : [...prev, n]
+            );
+            sessionStorage.setItem(key, "1");
+          }
+        }
+      });
+    }, 15000);
+
+    return () => clearInterval(interval);
+  }, [notifications, toast]);
+
   const toggleNotification = (id: string) => {
     setNotifications(prev => 
       prev.map(notification => 

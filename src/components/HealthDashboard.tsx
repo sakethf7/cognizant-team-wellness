@@ -16,6 +16,7 @@ import {
   Zap,
   Eye
 } from "lucide-react";
+import HealthNotifications from "@/components/HealthNotifications";
 
 interface HealthMetric {
   id: string;
@@ -28,9 +29,27 @@ interface HealthMetric {
   trend: "up" | "down" | "stable";
 }
 
+interface HealthCondition {
+  id: string;
+  name: string;
+  severity: "low" | "medium" | "high";
+  medications: string[];
+  dietaryRestrictions: string[];
+}
+
 export default function HealthDashboard() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [wellnessScore, setWellnessScore] = useState(78);
+  const [healthConditions, setHealthConditions] = useState<HealthCondition[]>([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('healthProfile');
+    if (saved) {
+      try {
+        setHealthConditions(JSON.parse(saved));
+      } catch {}
+    }
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -104,6 +123,12 @@ export default function HealthDashboard() {
           </div>
         </div>
       </div>
+
+      {healthConditions.length > 0 && (
+        <section aria-label="AI Health Reminders">
+          <HealthNotifications conditions={healthConditions} />
+        </section>
+      )}
 
       {/* Wellness Score */}
       <Card className="bg-gradient-to-r from-card to-card/80 border-0 shadow-wellness">
