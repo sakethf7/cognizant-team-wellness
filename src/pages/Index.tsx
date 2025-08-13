@@ -1,13 +1,21 @@
 
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import Login from "@/components/Login";
 import Navigation from "@/components/Navigation";
 import HealthDashboard from "@/components/HealthDashboard";
 import CheckInSystem from "@/components/CheckInSystem";
 import Analytics from "@/components/Analytics";
 import HealthBot from "@/components/HealthBot";
+import AdminPanel from "@/components/AdminPanel";
 
 const Index = () => {
+  const { user, login } = useAuth();
   const [activeTab, setActiveTab] = useState("dashboard");
+
+  if (!user) {
+    return <Login onLogin={login} />;
+  }
 
   const renderContent = () => {
     switch (activeTab) {
@@ -26,6 +34,8 @@ const Index = () => {
             <p className="text-muted-foreground">Coming soon - Monitor your team's overall wellness metrics</p>
           </div>
         );
+      case "admin":
+        return <AdminPanel />;
       case "settings":
         return (
           <div className="text-center py-12">
@@ -42,7 +52,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <div className="flex h-screen">
         <div className="flex-shrink-0">
-          <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+          <Navigation activeTab={activeTab} onTabChange={setActiveTab} user={user} />
         </div>
         <div className="flex-1 overflow-auto">
           <main className="p-6">
